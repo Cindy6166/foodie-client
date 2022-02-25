@@ -1,3 +1,4 @@
+/* eslint-disable no-new */
 <template>
   <section class="msite">
     <!--main site header-->
@@ -298,11 +299,23 @@
 
 <script>
 import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
+// Import Swiper Vue.js components
+import Swiper from 'swiper'
+// Import Swiper style
+import 'swiper/dist/css/swiper.min.css'
+
 export default {
+  mounted () {
+    new Swiper('.swiper-container', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination'
+      }
+    })
+  },
   components: {
     HeaderTop
   }
-
 }
 </script>
 
