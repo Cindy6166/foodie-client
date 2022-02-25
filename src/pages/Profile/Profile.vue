@@ -2,7 +2,7 @@
   <section class="profile">
     <HeaderTop title="我的"/>
     <section class="profile-number">
-      <a href="javascript:" class="profile-link">
+      <router-link to="/login" class="profile-link">
         <div class="profile_image">
           <font-awesome-icon class="icon-circle-user" icon="fa-solid fa-circle-user" />
         </div>
@@ -18,7 +18,7 @@
         <span class="arrow">
           <font-awesome-icon class="icon-arrow-right" icon="fa-solid fa-angle-right" />
         </span>
-      </a>
+      </router-link>
     </section>
     <section class="profile_info_data border-1px">
       <ul class="info_data_list">
