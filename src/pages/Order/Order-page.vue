@@ -1,20 +1,20 @@
 <template>
    <section class="order">
-      <header class="header">
-        <a class="header_title">
-          <span class="header_title_text">訂單列表</span>
-        </a>
-      </header>
-      <section class="order_no_login">
-        <img src="./images/person.png">
-        <h3>Login to check order</h3>
-        <button>Login</button>
-      </section>
+    <HeaderTop title="訂單列表"/>
+    <section class="order_no_login">
+      <img src="./images/person.png">
+      <h3>Login to check order</h3>
+      <button>Login</button>
+    </section>
     </section>
 </template>
 
 <script>
+import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
 export default {
+  components: {
+    HeaderTop
+  }
 
 }
 </script>

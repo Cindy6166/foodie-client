@@ -1,23 +1,18 @@
 <template>
   <section class="msite">
     <!--main site header-->
-    <header class="header">
-      <span class="header_search">
+    <HeaderTop title="西屯區市政北七路777號">
+       <span class="header_search" slot="left">
         <font-awesome-icon
           class="icon-search"
           icon="fa-solid fa-magnifying-glass"
           size="2x"
         />
       </span>
-      <span class="header_title">
-        <span class="header_title_text ellipsis"
-          >西屯區市政北七路777號</span
-        >
-      </span>
-      <span class="header_login">
+      <span class="header_login" slot="right">
         <span class="header_login_text">Login|Register</span>
       </span>
-    </header>
+    </HeaderTop>
     <!--main site nav-->
     <nav class="msite_nav">
       <div class="swiper-container">
@@ -302,7 +297,11 @@
 </template>
 
 <script>
+import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
 export default {
+  components: {
+    HeaderTop
+  }
 
 }
 </script>
@@ -311,45 +310,6 @@ export default {
 @import "../../common/stylus/mixins.styl"
 .msite
   width 100%
-  .header
-    background-color #02a774
-    position fixed
-    z-index 100
-    left 0
-    top 0
-    width 100%
-    height 45px
-    .header_search
-      position absolute
-      left 15px
-      top 50%
-      transform translateY(-50%)
-      width 10%
-      height 50%
-      .icon-search
-        font-size 25px
-        color #fff
-    .header_title
-      position absolute
-      top 50%
-      left 50%
-      transform translate(-50%, -50%)
-      width 50%
-      color #fff
-      text-align center
-      .header_title_text
-        font-size 20px
-        color #fff
-        display block
-    .header_login
-      font-size 14px
-      color #fff
-      position absolute
-      right 15px
-      top 50%
-      transform translateY(-50%)
-      .header_login_text
-        color #fff
   .msite_nav
     bottom-border-1px(#e4e4e4)
     margin-top 45px
