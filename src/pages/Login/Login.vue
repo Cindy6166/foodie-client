@@ -4,13 +4,13 @@
       <div class="login_header">
         <h2 class="login_logo">Foodie Delivery</h2>
         <div class="login_header_title">
-          <a class="on">手機登錄</a>
-          <a >帳號登錄</a>
+          <a href="javascript:;" >手機登錄</a>
+          <a href="javascript:;" class="on">帳號登錄</a>
         </div>
       </div>
       <div class="login_content">
         <form>
-          <div class="on">
+          <div >
             <section class="login_message">
               <input type="tel" maxlength="11" placeholder="手機號碼" />
               <button disabled="disabled" class="get_verification">
@@ -25,7 +25,7 @@
               <a href="javascript:;">《用戶服務協議》</a>
             </section>
           </div>
-          <div>
+          <div class="on">
             <section>
               <section class="login_message">
                 <input
