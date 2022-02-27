@@ -9,4 +9,4 @@ export const reqPosition = (geohash) => ajax(`${BASE_URL}/position/${geohash}`)
 // get catagory
 export const reqCategory = () => ajax(BASE_URL + '/index_category')
 
-export const reqShops = (longtitude, latitude) => ajax(BASE_URL + '/shop', { longtitude, latitude })
+export const reqShops = (latitude, longtitude) => ajax(BASE_URL + '/shops', { latitude, longtitude })
