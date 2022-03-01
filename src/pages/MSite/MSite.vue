@@ -16,7 +16,7 @@
     </HeaderTop>
     <!--main site nav-->
     <nav class="msite_nav">
-      <div class="swiper-container">
+      <div class="swiper-container" v-if="categoryListArr.length">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="(categoryList, index) in categoryListArr" :key="index">
             <a class="link_to_food" v-for="category in categoryList" :key="category.id">
@@ -30,6 +30,7 @@
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
       </div>
+      <img src="./images/msite_back.svg" alt="back" v-else>
     </nav>
     <!--main site nearby shops-->
     <div class="msite_shop_list">
@@ -55,13 +56,15 @@ export default {
   mounted () {
     // trigger API getCategory
     this.$store.dispatch('getCategory')
-    // create swiper
+    // trigger API getShops
+    this.$store.dispatch('getShops')
   },
   components: {
     HeaderTop, ShopList
   },
   watch: {
     category () {
+      // create swiper
       this.$nextTick(() => {
         new Swiper('.swiper-container', {
           loop: true,
@@ -73,7 +76,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['position', 'category']),
+    ...mapState(['position', 'category', 'shops']),
     /* 根據category一維陣列來生成二維陣列，其小陣列中的元素個數最大為8 */
     categoryListArr () {
       const arr = [] // 空的二維陣列
