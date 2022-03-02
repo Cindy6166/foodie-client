@@ -22,7 +22,7 @@
             </section>
             <section class="login_hint">
               温馨提示：若未註冊富迪外送，登錄時將自動註冊，且代表已同意
-              <a href="javascript:;">《用戶服務協議》</a>
+              <a>《用戶服務協議》</a>
             </section>
           </div>
           <div :class="{on:loginWay==='password'}">
@@ -42,8 +42,10 @@
                 <input type="text" maxlength="11" placeholder="驗證碼" v-model="captcha"/>
                 <img
                   class="get_verification"
-                  src="./images/captcha.svg"
+                  src="http://localhost:4000/captcha"
                   alt="captcha"
+                  @click="getCaptcha"
+                  ref="captcha"
                 />
               </section>
             </section>
@@ -62,6 +64,7 @@
 
 <script>
 import AlertTip from '../../components/AlertTip/AlertTip.vue'
+import { reqPwdLogin, reqSendCode, reqSmsLogin } from '../../api'
 export default {
   data () {
     return {
@@ -85,7 +88,7 @@ export default {
   },
   methods: {
     // 異步獲取驗證碼
-    getCode () {
+    async getCode () {
       if (!this.countdownTimer) {
         // 啟動倒數計時
         this.countdownTimer = 30
@@ -97,7 +100,17 @@ export default {
           }
         }, 1000)
 
-      // 發送ajax請求（向指定的手機號碼發送簡訊）
+        // 發送ajax請求（向指定的手機號碼發送簡訊)
+        const result = await reqSendCode(this.phone)
+        if (result.code === 1) {
+          // 顯示提示
+          this.showAlertWithText(result.msg)
+          // 停止計時
+          if (this.countdownTimer) {
+            this.countdownTimer = 0
+            clearInterval(intervalId)
+          }
+        }
       }
     },
     showAlertWithText (alertText) {
@@ -105,34 +118,72 @@ export default {
       this.alertText = alertText
     },
     // 異步登入
-    login () {
+    async login () {
+      let result
       // 前台表單驗證
       if (this.loginWay === 'text') { // 簡訊登陸
-        const { phoneCorrect, code } = this
+        const { phoneCorrect, phone, code } = this
         if (!phoneCorrect) {
           // 提示：手機號碼格式錯誤
           this.showAlertWithText('手機號碼格式錯誤')
+          return
         } else if (!/^\d{6}$/.test(code)) {
           // 提示：驗證碼必須為6位數字
           this.showAlertWithText('驗證碼必須為6位數字')
+          return
         }
+        // 發送ajax請求簡訊登錄
+        result = await reqSmsLogin(phone, code)
       } else { // 密碼登錄
         const { name, pwd, captcha } = this
         if (!name) {
           // 提示：用戶名必須指定
           this.showAlertWithText('用戶名必須指定')
+          return
         } else if (!pwd) {
           // 提示：密碼必須指定
           this.showAlertWithText('密碼必須指定')
+          return
         } else if (!captcha) {
           // 提示：驗證碼必須指定
           this.showAlertWithText('驗證碼必須指定')
+          return
         }
+        // 發送ajax請求密碼登錄
+        result = await reqPwdLogin(name, pwd, captcha)
+      }
+      // 停止計時
+      if (this.countdownTimer) {
+        this.countdownTimer = 0
+        clearInterval(this.intervalId)
+        console.log(this.intervalId)
+      }
+      // 根據result結果來處理數據
+      if (result.code === 0) {
+        // const user = result.data
+        // 將user保存到vuex的state
+        // 路由跳至個人中心頁面
+        this.$router.replace('/profile')
+      } else {
+        // 顯示新的圖片驗證碼
+        this.getCaptcha()
+
+        // 顯示警告提示
+        const msg = result.msg
+        this.showAlertWithText(msg)
+
+        // 清空captcha輸入匡
+        this.captcha = ''
       }
     },
+    // 關閉警告框
     closeTip () {
       this.showAlert = false
       this.alertText = ''
+    },
+    // 獲取新的圖片驗證碼
+    getCaptcha () {
+      this.$refs.captcha.src = 'http://localhost:4000/captcha'
     }
   }
 }
