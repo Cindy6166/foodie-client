@@ -15,9 +15,10 @@ export default {
   },
   mounted () {
     this.getPosition()
+    this.getUserInfo()
   },
   methods: {
-    ...mapActions(['getPosition'])
+    ...mapActions(['getPosition', 'getUserInfo'])
   }
 }
 </script>

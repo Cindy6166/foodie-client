@@ -160,8 +160,9 @@ export default {
       }
       // 根據result結果來處理數據
       if (result.code === 0) {
-        // const user = result.data
+        const userInfo = result.data
         // 將user保存到vuex的state
+        this.$store.dispatch('recordUserInfo', userInfo)
         // 路由跳至個人中心頁面
         this.$router.replace('/profile')
       } else {

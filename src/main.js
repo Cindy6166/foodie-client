@@ -3,6 +3,7 @@ import App from './App.vue'
 import '../static/css/reset.css'
 import router from './router'
 import store from './store'
+import { Button } from 'mint-ui'
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -16,7 +17,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faUserSecret, faMotorcycle, faMagnifyingGlass, faReceipt, faUser, faBars, faCircleUser, faMobileScreenButton, faAngleRight, faIdCard, faTrophy, faBuilding, faAngleLeft)
 
 /* add font awesome icon component */
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon) // <font-awesome-icon>
+
+Vue.component(Button.name, Button) // <mt-button>
 
 Vue.config.productionTip = false
 

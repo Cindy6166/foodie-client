@@ -3,16 +3,15 @@
   <section class="msite">
     <!--main site header-->
     <HeaderTop :title="position.address">
-       <span class="header_search" slot="left">
-        <font-awesome-icon
-          class="icon-search"
-          icon="fa-solid fa-magnifying-glass"
-          size="2x"
-        />
-      </span>
-      <span class="header_login" slot="right">
-        <span class="header_login_text">Login|Register</span>
-      </span>
+      <router-link class="header_search" slot="left" to="/search">
+       <font-awesome-icon class="icon-search" icon="fa-solid fa-magnifying-glass" size="2x" />
+      </router-link>
+      <!-- <router-link :to="userInfo ? '/userInfo': '/login'"> -->
+        <router-link class="header_login" slot="right" :to="userInfo ? '/userInfo': '/login'">
+        <span class="header_login_text" v-if="!userInfo">Login|Register</span>
+        <font-awesome-icon class="header_login_text" icon="fa-solid fa-user" size="2x" v-else/>
+      </router-link>
+      <!-- </router-link> -->
     </HeaderTop>
     <!--main site nav-->
     <nav class="msite_nav">
@@ -76,7 +75,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['position', 'category', 'shops']),
+    ...mapState(['position', 'category', 'shops', 'userInfo']),
     /* 根據category一維陣列來生成二維陣列，其小陣列中的元素個數最大為8 */
     categoryListArr () {
       const arr = [] // 空的二維陣列

@@ -2,17 +2,17 @@
   <section class="profile">
     <HeaderTop title="我的"/>
     <section class="profile-number">
-      <router-link to="/login" class="profile-link">
+      <router-link :to="userInfo ? '/userInfo':'/login'" class="profile-link">
         <div class="profile_image">
           <font-awesome-icon class="icon-circle-user" icon="fa-solid fa-circle-user" />
         </div>
         <div class="user-info">
-          <p class="user-info-top">Login/Register</p>
+          <p class="user-info-top" v-if="!userInfo.phone">{{userInfo.name || 'Login/Register'}}</p>
           <p>
             <span class="user-icon">
               <font-awesome-icon class="icon-mobile" icon="fa-solid fa-mobile-screen-button" />
             </span>
-            <span class="icon-mobile-number">暫不綁定手機號碼</span>
+            <span class="icon-mobile-number">{{userInfo.phone || '暫不綁定手機號碼'}}</span>
           </p>
         </div>
         <span class="arrow">
@@ -88,14 +88,36 @@
         </div>
       </a>
     </section>
+    <section class="profile_my_order border-1px">
+      <mt-button type="danger" style="width: 100%" @click="logout"  v-if="userInfo._id">退出登陸</mt-button>
+    </section>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { MessageBox, Toast } from 'mint-ui'
 import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
 export default {
   components: {
     HeaderTop
+  },
+  computed: {
+    ...mapState(['userInfo'])
+  },
+  methods: {
+    logout () {
+      MessageBox.confirm('您確定要退出？').then(
+        action => {
+          // 請求退出
+          this.$store.dispatch('logout')
+          Toast('成功退出')
+        },
+        action => {
+          console.log('cancel')
+        }
+      )
+    }
   }
 
 }
