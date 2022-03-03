@@ -58,7 +58,7 @@
         <font-awesome-icon class="icon-arrow" icon="fa-solid fa-angle-left" />
       </a>
     </div>
-    <AlertTip :alertText="alertText" v-show="showAlert" @closeTip="closeTip"></AlertTip>>
+    <AlertTip :alertText="alertText" v-show="showAlert" @closeTip="closeTip"></AlertTip>
   </section>
 </template>
 

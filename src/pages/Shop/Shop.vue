@@ -22,7 +22,11 @@ export default {
   name: 'Shop',
   components: {
     ShopHeader
+  },
+  mounted () {
+    this.$store.dispatch('getShopInfo')
   }
+
 }
 </script>
 

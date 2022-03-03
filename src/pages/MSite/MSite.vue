@@ -7,8 +7,8 @@
        <font-awesome-icon class="icon-search" icon="fa-solid fa-magnifying-glass" size="2x" />
       </router-link>
       <!-- <router-link :to="userInfo ? '/userInfo': '/login'"> -->
-        <router-link class="header_login" slot="right" :to="userInfo ? '/userInfo': '/login'">
-        <span class="header_login_text" v-if="!userInfo">Login|Register</span>
+        <router-link class="header_login" slot="right" :to="userInfo.id ? '/userInfo': '/login'">
+        <span class="header_login_text" v-if="!userInfo._id">Login|Register</span>
         <font-awesome-icon class="header_login_text" icon="fa-solid fa-user" size="2x" v-else/>
       </router-link>
       <!-- </router-link> -->
