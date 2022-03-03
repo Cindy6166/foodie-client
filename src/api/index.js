@@ -29,3 +29,12 @@ export const reqUserInfo = () => ajax(BASE_URL + '/userinfo')
 
 // user logout
 export const reqLogout = () => ajax(BASE_URL + 'logout')
+
+// get shop info
+export const reqShopInfo = () => ajax('/info')
+
+// get the ratings of shop
+export const reqShopRatings = () => ajax('/ratings')
+
+// get the goods of shop
+export const reqShopGoods = () => ajax('/goods')

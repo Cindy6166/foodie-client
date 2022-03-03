@@ -4,5 +4,8 @@ export default {
   position: {}, // 位置
   category: [], // 食品分類
   shops: [], // 商家
-  userInfo: {} // 用戶資訊
+  userInfo: {}, // 用戶資訊
+  goods: [], // 商品列表
+  ratings: [], // 商家評價列表
+  info: {} // 商家資訊
 }

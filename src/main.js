@@ -4,6 +4,8 @@ import '../static/css/reset.css'
 import router from './router'
 import store from './store'
 import { Button } from 'mint-ui'
+import './mock/mockServer' // 加載mockServer
+
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 
