@@ -76,11 +76,13 @@ export default {
     }
   },
   // 異步獲取商家商品列表
-  async getShopGoods ({ commit }) {
+  async getShopGoods ({ commit }, callback) {
     const result = await reqShopGoods()
     if (result.code === 0) {
       const goods = result.data
       commit(RECEIVE_GOODS, { goods })
+      // 數據更新完成，通知一下組件
+      callback && callback() // 因callback可傳可不傳
     }
   },
   // 異步獲取商家評價列表
