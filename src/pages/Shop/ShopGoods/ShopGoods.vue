@@ -3,7 +3,7 @@
     <div class="goods">
       <div class="menu-wrapper">
         <ul>
-          <li class="menu-item" v-for="good in goods" :key="good.id">
+          <li class="menu-item" v-for="(good, index) in goods" :key="index" :class="{current: index === currentIndex}" @click="clickMenuItem(index)">
             <span class="text bottom-border-1px">
               <img class="icon" :src="good.icon" v-if="good.icon">
               {{good.name}}
@@ -13,7 +13,7 @@
       </div>
       <div class="foods-wrapper">
         <ul ref="foodsUl">
-          <li class="food-list-hook" v-for="(good, index) in goods" :key="index" :class="{current: index}">
+          <li class="food-list-hook" v-for="(good, index) in goods" :key="index">
             <h1 class="title">{{good.name}}</h1>
             <ul>
               <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods" :key="index">
@@ -58,14 +58,69 @@ export default {
   mounted () {
     this.$store.dispatch('getShopGoods', () => { // 數據更新後執行
       this.$nextTick(() => { // 列表數據更新顯示後執行
-        // 列表顯示之後創建
-        new BScroll('.menu-wrapper')
-        new BScroll('.foods-wrapper')
+        this._initScroll()
+        this._initTops()
       })
     })
   },
   computed: {
-    ...mapState(['goods'])
+    ...mapState(['goods']),
+
+    // 得到當前分類的index
+    currentIndex () {
+      // 條件數據
+      const { scrollY, tops } = this
+      // 根據條件計算產生一個結果
+      const index = tops.findIndex((top, index) => {
+        // scrollY >= 當前top && scrollY < 下一個top
+        return scrollY >= top && scrollY < tops[index + 1]
+      })
+      // 返回結果
+      return index
+    }
+  },
+  methods: {
+    // 初始化滾動
+    _initScroll () {
+      // 列表顯示之後創建
+      new BScroll('.menu-wrapper', {
+        click: true
+      })
+      this.foodsScroll = new BScroll('.foods-wrapper', {
+        probeType: 2, // 因為慣性滑動不會觸發
+        click: true
+      })
+      // 給右側列表綁定scroll監聽
+      this.foodsScroll.on('scroll', ({ x, y }) => {
+        this.scrollY = Math.abs(y) // absolute value
+      })
+      // 給右側列表綁定scroll結束的監聽
+      this.foodsScroll.on('scrollEnd', ({ x, y }) => {
+        this.scrollY = Math.abs(y) // absolute value
+      })
+    },
+    // 初始化tops
+    _initTops () {
+      // 1.初始化
+      const tops = []
+      let top = 0
+      tops.push(top)
+      // 2.收集
+      // 找到所有分類的li
+      const lis = this.$refs.foodsUl.getElementsByClassName('food-list-hook')
+      Array.prototype.slice.call(lis).forEach(li => {
+        top += li.clientHeight
+        tops.push(top)
+      })
+      // 3.更新數據
+      this.tops = tops
+    },
+    clickMenuItem (index) {
+      // 點擊左側列表時，使右側列表滑動到對應的位置
+      const scrollY = this.tops[index] // 得到目標位置的scrollY
+      this.scrollY = scrollY // 立即更新scrollY（讓點擊效果立即產生，避免延遲
+      this.foodsScroll.scrollTo(0, -scrollY, 300) // 平滑滾動右側列表
+    }
   }
 }
 </script>
