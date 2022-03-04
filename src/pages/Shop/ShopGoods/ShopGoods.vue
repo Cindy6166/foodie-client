@@ -16,7 +16,7 @@
           <li class="food-list-hook" v-for="(good, index) in goods" :key="index">
             <h1 class="title">{{good.name}}</h1>
             <ul>
-              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods" :key="index">
+              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods" :key="index" @click="showFoodModal(food)">
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
                 </div>
@@ -41,20 +41,23 @@
         </ul>
       </div>
     </div>
+    <FoodModal :food="food" ref="foodModal"/>
   </div>
 </template>
 
 <script>
+import FoodModal from '../../../components/FoodModal/FoodModal.vue'
 import CartControl from '../../../components/CartControl/CartControl.vue'
 import BScroll from 'better-scroll'
 import { mapState } from 'vuex'
 export default {
   name: 'ShopGoods',
-  components: { CartControl },
+  components: { CartControl, FoodModal },
   data () {
     return {
       scrollY: 0, // 右側滑動時Y軸的座標
-      tops: [] // 所有右側li分類的top所組成的陣列
+      tops: [], // 所有右側li分類的top所組成的陣列
+      food: {} // 需要顯示時的food
     }
   },
   mounted () {
@@ -122,6 +125,13 @@ export default {
       const scrollY = this.tops[index] // 得到目標位置的scrollY
       this.scrollY = scrollY // 立即更新scrollY（讓點擊效果立即產生，避免延遲
       this.foodsScroll.scrollTo(0, -scrollY, 300) // 平滑滾動右側列表
+    },
+    // 顯示點擊時的food
+    showFoodModal (food) {
+      // 設置food
+      this.food = food
+      // 顯示FoodModal (父組件調用子組件對象的方法)
+      this.$refs.foodModal.toggleShow()
     }
   }
 }
