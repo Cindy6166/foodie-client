@@ -40,19 +40,21 @@
           </li>
         </ul>
       </div>
+      <ShopCart/>
     </div>
     <FoodModal :food="food" ref="foodModal"/>
   </div>
 </template>
 
 <script>
-import FoodModal from '../../../components/FoodModal/FoodModal.vue'
-import CartControl from '../../../components/CartControl/CartControl.vue'
 import BScroll from 'better-scroll'
 import { mapState } from 'vuex'
+import CartControl from '../../../components/CartControl/CartControl.vue'
+import FoodModal from '../../../components/FoodModal/FoodModal.vue'
+import ShopCart from '../../../components/ShopCart/ShopCart.vue'
 export default {
   name: 'ShopGoods',
-  components: { CartControl, FoodModal },
+  components: { CartControl, FoodModal, ShopCart },
   data () {
     return {
       scrollY: 0, // 右側滑動時Y軸的座標

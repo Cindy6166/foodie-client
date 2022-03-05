@@ -7,5 +7,6 @@ export default {
   userInfo: {}, // 用戶資訊
   goods: [], // 商品列表
   ratings: [], // 商家評價列表
-  info: {} // 商家資訊
+  info: {}, // 商家資訊
+  cartFoods: [] // 購物車中的食物列表
 }

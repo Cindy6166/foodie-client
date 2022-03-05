@@ -1,14 +1,16 @@
 <template>
-  <div class="alert_container">
-    <section class="tip_text_container">
-      <div class="tip_icon">
-        <span></span>
-        <span></span>
-      </div>
-      <p class="tip_text">{{alertText}}</p>
-      <div class="confrim" @click="closeTip">確定</div>
-    </section>
-  </div>
+  <transition name="fade">
+    <div class="alert_container">
+      <section class="tip_text_container">
+        <div class="tip_icon">
+          <span></span>
+          <span></span>
+        </div>
+        <p class="tip_text">{{alertText}}</p>
+        <div class="confrim" @click="closeTip">確定</div>
+      </section>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -47,6 +49,10 @@ export default {
     bottom: 0;
     z-index: 200;
     background: rgba(0, 0, 0, .5)
+    &.fade-enter-active
+      transition opacity .5s
+    &.fade-enter, &.fade-leave-to
+      opacity 0
     .tip_text_container
       position: absolute;
       top: 50%;
