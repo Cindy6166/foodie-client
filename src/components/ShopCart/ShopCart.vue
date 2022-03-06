@@ -22,7 +22,7 @@
         <div class="shopcart-list" v-show="listShow">
           <div class="list-header">
             <h1 class="title">購物車</h1>
-            <span class="empty">清空</span>
+            <span class="empty" @click="clearCart">清空</span>
           </div>
           <div class="list-content">
             <ul>
@@ -39,11 +39,15 @@
       </transition>
 
     </div>
-    <div class="list-mask" v-show="listShow" @click="toggleShow"></div>
+    <transition name="fade">
+       <div class="list-mask" v-show="listShow" @click="toggleShow"></div>
+    </transition>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
+import { MessageBox } from 'mint-ui'
 import { mapState, mapGetters } from 'vuex'
 import CartControl from '../../components/CartControl/CartControl.vue'
 export default {
@@ -79,6 +83,19 @@ export default {
         this.isShow = false
         return false
       }
+      if (this.isShow) {
+        // eslint-disable-next-line vue/no-async-in-computed-properties
+        this.$nextTick(() => {
+          // 實現BScroll的實例對象是一個單例
+          if (!this.scroll) {
+            this.scroll = new BScroll('.list-content', {
+              click: true
+            })
+          } else {
+            this.scroll.refresh() // 讓滾動條刷新一下：重新統計內容的高度
+          }
+        })
+      }
       return this.isShow
     }
   },
@@ -88,6 +105,12 @@ export default {
       if (this.totalCount > 0) {
         this.isShow = !this.isShow
       }
+    },
+    clearCart () {
+      MessageBox.confirm('確定清空購物車嗎？').then(
+        confirm => { this.$store.dispatch('clearCart') },
+        cancel => { }
+      )
     }
   }
 }
@@ -266,7 +289,7 @@ export default {
     opacity 1
     background rgba(7, 17, 27, 0.6)
     &.fade-enter-active, &.fade-leave-active
-      transition all 0.5s
+      transition all .3s
     &.fade-enter, &.fade-leave-to
       opacity 0
       background rgba(7, 17, 27, 0)
