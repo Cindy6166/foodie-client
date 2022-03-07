@@ -48,7 +48,7 @@ export default {
   name: 'FooterGuide',
   methods: {
     goTo (path) {
-      this.$router.replace(path)
+      this.$router.replace(path).catch(() => {}) // .catch(()=>{}) 避免在此路由時點擊報錯
     }
   }
 }

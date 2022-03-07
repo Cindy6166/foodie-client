@@ -13,7 +13,7 @@ export const reqCategory = () => ajax(BASE_URL + '/index_category')
 export const reqShops = (latitude, longtitude) => ajax(BASE_URL + '/shops', { latitude, longtitude })
 
 // request search result with geohash and keyword
-export const reqSearchShop = (geohash, keyword) => ajax(BASE_URL + '/search_shops')
+export const reqSearchShop = (geohash, keyword) => ajax(BASE_URL + '/search_shops', { geohash, keyword })
 
 // request login with user's name and password
 export const reqPwdLogin = (name, pwd, captcha) => ajax(BASE_URL + '/login_pwd', { name, pwd, captcha }, 'POST')
