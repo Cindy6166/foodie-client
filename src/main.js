@@ -10,13 +10,13 @@ import './mock/mockServer' // 加載mockServer
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 /* import specific icons */
-import { faUserSecret, faMotorcycle, faMagnifyingGlass, faReceipt, faUser, faBars, faCircleUser, faMobileScreenButton, faAngleRight, faIdCard, faTrophy, faBuilding, faAngleLeft, faCircleXmark, faCirclePlus, faCircleMinus, faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret, faMotorcycle, faMagnifyingGlass, faReceipt, faUser, faBars, faCircleUser, faMobileScreenButton, faAngleRight, faIdCard, faTrophy, faBuilding, faAngleLeft, faCircleXmark, faCirclePlus, faCircleMinus, faCartShopping, faThumbsUp, faThumbsDown, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* add icons to the library */
-library.add(faUserSecret, faMotorcycle, faMagnifyingGlass, faReceipt, faUser, faBars, faCircleUser, faMobileScreenButton, faAngleRight, faIdCard, faTrophy, faBuilding, faAngleLeft, faCircleXmark, faCirclePlus, faCircleMinus, faCartShopping)
+library.add(faUserSecret, faMotorcycle, faMagnifyingGlass, faReceipt, faUser, faBars, faCircleUser, faMobileScreenButton, faAngleRight, faIdCard, faTrophy, faBuilding, faAngleLeft, faCircleXmark, faCirclePlus, faCircleMinus, faCartShopping, faThumbsUp, faThumbsDown, faCircleCheck)
 
 /* add font awesome icon component */
 Vue.component('font-awesome-icon', FontAwesomeIcon) // <font-awesome-icon>

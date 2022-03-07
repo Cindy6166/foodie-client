@@ -89,11 +89,12 @@ export default {
     }
   },
   // 異步獲取商家評價列表
-  async getShopRatings ({ commit }) {
+  async getShopRatings ({ commit }, callback) {
     const result = await reqShopRatings()
     if (result.code === 0) {
       const ratings = result.data
       commit(RECEIVE_RATINGS, { ratings })
+      callback && callback()
     }
   },
   // 異步獲取商家資訊
