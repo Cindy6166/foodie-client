@@ -67,7 +67,7 @@
                 </span>
                 <span class="item" v-for="(item,index) in rating.recommend" :key="index">{{item}}</span>
               </div>
-              <div class="time">{{rating.rateTime}}</div>
+              <div class="time">{{rating.rateTime | data-format}}</div>
             </div>
           </li>
         </ul>
